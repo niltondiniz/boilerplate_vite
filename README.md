@@ -1,73 +1,41 @@
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
+  <a href="http://nestjs.com/" target="blank"><img src="https://www.radixeng.com.br/images/logos/radix-logo-completo.png" width="200" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+  <p align="center">Modelo para criação de API/Microservices usando Kafka e WebSockets</p>
     <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+# Boilerplate NodeJS
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Conhecendo os containers
 
-## Installation
+  O projeto possui 13 containers, sendo eles distribuidos nos seguintes ambientes:
+  1. ELK, os 3 containers que funcionam neste ambiente são responsáveis por manter a funcionalidade de logs do projeto. Neste ambiente funcionam:
+  - FluentBit: Log Processor, responsavél por absorver os logs gerados no container que implementa o "fluentd" como "log driver", e enviá-los ao elasticsearch
+  - Elasticsearch: Mecanismo de busca e analise de dados
+  - Kibana: Interface para visualização de dados. Tem como origem de dados várias fontes possíveis. A utilizada no projeto será o Elasticsearch.
+  2. Api, uma imagem usando Node, responsável por manter a API
+  3. Kafka, possui 9 containers responsáveis por manter o ecossistema do Kafka.
 
-```bash
-$ npm install
-```
+  ## Levantando o ambiente
 
-## Running the app
+  Todo o projeto está rodando no ambiente do Docker, para subir o ambiente basta rodar dentro da pasta raiz no projeto: 
+  - **docker-compose build**
+  - **docker-compose up -d**
 
-```bash
-# development
-$ npm run start
+  Obs: 
+  - Dependendo da capacidade do maquina que está sendo utilizada, será necessário aumentar a memória ram disponível para o Docker nas configurações do próprio docker.
+  - O comando **docker-compose ps** verifica a saude dos containers.
+  - Caso um container não suba execute novamente o comando **docker-compose up -d**
+  - Para parar o ambiente execute: **docker-compose** down
 
-# watch mode
-$ npm run start:dev
+  ## Acessando os containers
 
-# production mode
-$ npm run start:prod
-```
+  ### API
+  - http://localhost:3000
 
-## Test
+  ### Kibana
+  - http://localhost:5601
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+  ### Kafka Control-Center
+  - http://localhost:9021
