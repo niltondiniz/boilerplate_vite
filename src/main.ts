@@ -18,7 +18,7 @@ async function bootstrap() {
     transport: Transport.KAFKA,
     options: {
       client: {
-        brokers: ['broker:29092'],
+        brokers: ['localhost:9092'],
       },
       consumer: {
         groupID: 'my-consumer-' + Math.random(), 
@@ -30,7 +30,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('BoilerPlate')
     .setDescription( 'informar descricao')
-    .setVersion('1.0')
+    .setVersion('1.1')
     .addTag('Kafka')
     .build();
 

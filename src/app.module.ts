@@ -31,7 +31,7 @@ import { HttpModule } from '@nestjs/axios';
         transport: Transport.KAFKA,
         options: {
           client: {
-            brokers: ['broker:29092'],
+            brokers: ['localhost:9092'],
           },
           consumer: {
             groupId: 'my-consumer-' + Math.random(),

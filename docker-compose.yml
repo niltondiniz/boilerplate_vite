@@ -23,19 +23,19 @@ services:
     image: docker.elastic.co/kibana/kibana:6.8.18
     ports:
       - "5601:5601"
-  api:
-    build:
-      context: .
-      target: api
-    ports: 
-      - "3000:3000"      
-    logging:
-      driver: fluentd
-      options:
-        tag: boilerplate_api  
-    depends_on: 
-      - fluentbit
-      - broker
+  #api:
+  #  build:
+  #    context: .
+  #    target: api
+  #  ports: 
+  #    - "3000:3000"      
+  #  logging:
+  #    driver: fluentd
+  #    options:
+  #      tag: boilerplate_api  
+  #  depends_on: 
+  #    - fluentbit
+  #    - broker
         
   zookeeper:
     image: confluentinc/cp-zookeeper:6.2.0
@@ -75,7 +75,9 @@ services:
       CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
       CONFLUENT_METRICS_ENABLE: 'true'
       CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
-
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
+      
   # schema-registry:
   #   image: confluentinc/cp-schema-registry:6.2.0
   #   hostname: schema-registry
