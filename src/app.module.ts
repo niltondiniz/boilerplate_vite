@@ -14,6 +14,7 @@ import { Consumercontroller } from './consumer/consumer.controller';
 import { TerminusModule } from '@nestjs/terminus';
 import { HealthController } from './health/health.controller';
 import { HttpModule } from '@nestjs/axios';
+import { ConfigModule } from '@nestjs/config';
 
 
 
@@ -22,6 +23,8 @@ import { HttpModule } from '@nestjs/axios';
   imports: [
     CorridaModule, TerminusModule, HttpModule,
     
+    ConfigModule.forRoot({ envFilePath: `/env/env.${process.env.NODE_ENV}` }),
+
     WinstonModule.forRoot(winstonConfig),
 
 
@@ -39,6 +42,9 @@ import { HttpModule } from '@nestjs/axios';
         },
       },
     ]),
+
+
+    
 
   
   ],
