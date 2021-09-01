@@ -10,7 +10,7 @@ import {
 
 const wsPort = parseInt( process.env.WS_PORT );
 
-@WebSocketGateway(wsPort) //informo a porta do websocket
+@WebSocketGateway(3001) //informo a porta do websocket
 export class CorridaGateway
   implements OnGatewayConnection, OnGatewayDisconnect
 {

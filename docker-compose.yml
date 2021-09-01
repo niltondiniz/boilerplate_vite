@@ -64,7 +64,8 @@ services:
       context: .
       target: api
     ports: 
-      - "3000:3000"   
+      - "3000:3000"
+      - "3001:3001"   
     logging:
       driver: fluentd
       options:

@@ -7,11 +7,22 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { WinstonModule } from 'nest-winston';
 import { winstonConfig } from './configs/winston.config'
 
+import { ValidationPipe } from '@nestjs/common';
+import { useContainer } from 'class-validator';
+
+
 async function bootstrap() {
 
   const logger = WinstonModule.createLogger(winstonConfig);
   const app = await NestFactory.create(AppModule, { cors: true, logger });
 
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true
+  }));
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
+
+
+  console.log('teste 12345');
   console.log(`ambiente:${process.env.NODE_ENV}`);
   console.log(process.env.API_PORT);
 
@@ -19,7 +30,7 @@ async function bootstrap() {
     transport: Transport.KAFKA,
     options: {
       client: {
-        brokers: [process.env.BROKER_KAFKA],
+        brokers: ["broker:29092"],
       },
       consumer: {
         groupID: 'my-consumer-' + Math.random(), 

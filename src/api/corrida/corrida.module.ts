@@ -17,7 +17,7 @@ import { CorridaController } from "./corrida.controller";
         transport: Transport.KAFKA,
         options: {
           client: {
-            brokers: [process.env.BROKER_KAFKA],
+            brokers: ["broker:29092"],
           },
           consumer: {
             groupId: "my-consumer-" + Math.random(),
