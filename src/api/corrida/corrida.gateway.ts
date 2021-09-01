@@ -8,7 +8,9 @@ import {
   MessageBody,
 } from "@nestjs/websockets";
 
-@WebSocketGateway(3001) //informo a porta do websocket
+const wsPort = parseInt( process.env.WS_PORT );
+
+@WebSocketGateway(wsPort) //informo a porta do websocket
 export class CorridaGateway
   implements OnGatewayConnection, OnGatewayDisconnect
 {
@@ -17,7 +19,7 @@ export class CorridaGateway
 
   async handleConnection() { //qnd executa uma nova conexão de usuario na porta
     this.users++;
-    console.log('Websocket conectado na porta 3001');
+    console.log(`Websocket conectado na porta ${process.env.WS_PORT}`);
     console.log(`Usuario conectado: ${this.users}`);
     this.server.emit("users", `Usuario conectado: ${this.users}`); //envio uma resposta pro usuario no tunel chamado usuario
 

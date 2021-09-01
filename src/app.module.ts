@@ -14,9 +14,11 @@ import { TerminusModule } from '@nestjs/terminus';
 import { HealthController } from './health/health.controller';
 import { HttpModule } from '@nestjs/axios';
 
+const ENV = process.env.NODE_ENV;
+
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({envFilePath: `src/env/env.${ENV}`, isGlobal: true}), //configuracao do arquivo de configuracoes
     CorridaModule, 
     TerminusModule, 
     WinstonModule.forRoot(winstonConfig),
@@ -26,7 +28,7 @@ import { HttpModule } from '@nestjs/axios';
         transport: Transport.KAFKA,
         options: {
           client: {
-            brokers: ['broker:29092'],
+            brokers: [process.env.BROKER_KAFKA],
           },
           consumer: {
             groupId: 'my-consumer-' + Math.random(),
