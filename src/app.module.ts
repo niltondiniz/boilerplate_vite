@@ -1,5 +1,4 @@
-
-
+import { ConfigModule } from '@nestjs/config';
 import { CorridaModule } from './api/corrida/corrida.module';
 import { CorridaController } from './api/corrida/corrida.controller';
 import { Module } from '@nestjs/common';
@@ -14,27 +13,20 @@ import { Consumercontroller } from './consumer/consumer.controller';
 import { TerminusModule } from '@nestjs/terminus';
 import { HealthController } from './health/health.controller';
 import { HttpModule } from '@nestjs/axios';
-import { ConfigModule } from '@nestjs/config';
-
-
-
 
 @Module({
   imports: [
-    CorridaModule, TerminusModule, HttpModule,
-    
-    ConfigModule.forRoot({ envFilePath: `/env/env.${process.env.NODE_ENV}` }),
-
+    ConfigModule.forRoot(),
+    CorridaModule, 
+    TerminusModule, 
     WinstonModule.forRoot(winstonConfig),
-
-
     ClientsModule.register([
       {
         name: 'KAFKA_SERVICE',
         transport: Transport.KAFKA,
         options: {
           client: {
-            brokers: ['localhost:9092'],
+            brokers: ['broker:29092'],
           },
           consumer: {
             groupId: 'my-consumer-' + Math.random(),
@@ -42,11 +34,6 @@ import { ConfigModule } from '@nestjs/config';
         },
       },
     ]),
-
-
-    
-
-  
   ],
   controllers: [
      AppController, Consumercontroller, HealthController],
