@@ -3,6 +3,7 @@ WORKDIR /usr/src
 COPY package*.json .
 COPY tsconfig*.json .
 COPY nest*.json .
+COPY .env* .
 #RUN npm install -g nodemon
 RUN npm install
 COPY ./src .
