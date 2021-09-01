@@ -1,23 +1,41 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { pipe } from 'rxjs';
 
 export class Corrida{
-    @ApiProperty()
+
+    @ApiProperty({
+        description: 'Campo para identificar o Passageiro',
+        minimum: 1,
+        maximum: 50
+      }) @IsNotEmpty({message: 'UID Do Passageiro não preenchido!'}) @IsString()
     uidPassageiro: String;
-    @ApiProperty()
+
+    @ApiProperty() @IsNotEmpty({message: 'Origem não preenchido!'})
     origemDetail: String;
-    @ApiProperty()
+
+    @ApiProperty()  @IsNotEmpty({message: 'Latitude da Origem não preenchido!'})
     origemLatitude: String;
-    @ApiProperty()
+    
+    @ApiProperty()  @IsNotEmpty({message: 'Longitutde de Origem não preenchido!'}) 
     origemLongitude: String;
-    @ApiProperty()
+    
+    @ApiProperty()  @IsNotEmpty()
     destinoDetail: String;
-    @ApiProperty()
+    
+    @ApiProperty()  @IsNotEmpty()
     destinoLatitude: String;
-    @ApiProperty()
+    
+    @ApiProperty()  @IsNotEmpty()
     destinoLongitude: String;
-    @ApiProperty()
+    
+    @ApiProperty()  @IsNotEmpty()
     status: String;
-    @ApiProperty()
+    
+    @ApiProperty()  @IsNotEmpty()
     uidMotorista: String;
+
+    @ApiProperty() @IsEmail()
+    emailMotorista: String;
 
 }
