@@ -25,7 +25,7 @@
 
   Obs: 
   - Dependendo da capacidade do maquina que está sendo utilizada, será necessário aumentar a memória ram disponível para o Docker nas configurações do próprio docker.
-  - O comando **docker-compose ps** verifica a saude dos containers.
+  - O comando **docker-compose ps** verifica o estado dos containers.
   - Caso um container não suba execute novamente o comando **docker-compose up -d**
   - Para parar o ambiente execute: **docker-compose** down
 

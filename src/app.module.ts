@@ -1,5 +1,4 @@
-
-
+import { ConfigModule } from '@nestjs/config';
 import { CorridaModule } from './api/corrida/corrida.module';
 import { CorridaController } from './api/corrida/corrida.controller';
 import { Module } from '@nestjs/common';
@@ -15,16 +14,12 @@ import { TerminusModule } from '@nestjs/terminus';
 import { HealthController } from './health/health.controller';
 import { HttpModule } from '@nestjs/axios';
 
-
-
-
 @Module({
   imports: [
-    CorridaModule, TerminusModule, HttpModule,
-    
+    ConfigModule.forRoot(),
+    CorridaModule, 
+    TerminusModule, 
     WinstonModule.forRoot(winstonConfig),
-
-
     ClientsModule.register([
       {
         name: 'KAFKA_SERVICE',
@@ -39,8 +34,6 @@ import { HttpModule } from '@nestjs/axios';
         },
       },
     ]),
-
-  
   ],
   controllers: [
      AppController, Consumercontroller, HealthController],
