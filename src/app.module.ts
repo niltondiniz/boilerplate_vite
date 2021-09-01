@@ -13,15 +13,10 @@ import { Consumercontroller } from './consumer/consumer.controller';
 import { TerminusModule } from '@nestjs/terminus';
 import { HealthController } from './health/health.controller';
 import { HttpModule } from '@nestjs/axios';
-import { ApmModule } from 'nestjs-apm-v6';
-
-
-
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    ApmModule.register(),
     CorridaModule, 
     TerminusModule, 
     WinstonModule.forRoot(winstonConfig),

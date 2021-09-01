@@ -1,5 +1,4 @@
 require('dotenv').config({ path: `../${process.env.NODE_ENV}.env` });
-import { apm } from 'nestjs-apm-v6';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Transport } from '@nestjs/microservices';
@@ -13,10 +12,6 @@ async function bootstrap() {
 
   const logger = WinstonModule.createLogger(winstonConfig);
   const app = await NestFactory.create(AppModule, { cors: true, logger });
-
-  if (apm.isStarted()) {
-    console.log('APM running');
-  }
 
   app.connectMicroservice({
     transport: Transport.KAFKA,
@@ -40,6 +35,7 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+  
 
   await app.startAllMicroservices();
   await app.listen(3000);
