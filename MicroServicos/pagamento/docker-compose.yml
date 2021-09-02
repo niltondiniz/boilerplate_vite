@@ -1,0 +1,11 @@
+version: "3"
+services:
+  
+  ms_pagamento:
+    build:
+      context: .
+      target: ms_pagamento
+    ports: 
+      - "3010:3010"
+    
+     

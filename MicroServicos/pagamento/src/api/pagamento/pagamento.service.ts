@@ -4,10 +4,10 @@ import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
 import { Producer } from '@nestjs/microservices/external/kafka.interface';
 
-import { Corrida } from './corrida.entity';
+import { Pagamento } from './pagamento.entity';
 
 @Injectable()
-export class CorridaService implements OnModuleInit{
+export class PagamentoService implements OnModuleInit{
 
     private kafkaProducer: Producer;
 
@@ -20,25 +20,15 @@ export class CorridaService implements OnModuleInit{
         this.kafkaProducer = await this.clienteKafka.connect();
     }
 
-    public async criaCorrida(corrida: Corrida){
+    public async createPagamento(Pagamento: Pagamento){
       const resultado = await this.kafkaProducer.send({
-          topic: 'corridas',
+          topic: 'Pagamentos',
           messages: [
               {
-                  key: Math.random() + "" , value: JSON.stringify({corrida})
+                  key: Math.random() + "" , value: JSON.stringify({Pagamento})
               }
           ]
       });  
-      
-      const resultadoPagamento = await this.kafkaProducer.send({
-        topic: 'Pagamentos',
-        messages: [
-            {
-                key: Math.random() + "" , value: JSON.stringify({corrida})
-            }
-        ]
-    });  
-
     }
 
 

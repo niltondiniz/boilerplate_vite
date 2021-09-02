@@ -59,6 +59,7 @@ services:
     image: docker.elastic.co/kibana/kibana:7.14.0
     ports:
       - "5601:5601"
+
   api:
     build:
       context: .
@@ -73,7 +74,17 @@ services:
     depends_on: 
       - fluentbit
       - broker
-        
+  
+  ms_pagamento:
+    build:
+      context: .
+      target: ms_pagamento
+    ports: 
+      - "3010:3010"
+    depends_on: 
+      - api
+      - broker
+
   zookeeper:
     image: confluentinc/cp-zookeeper:6.2.0
     hostname: zookeeper
