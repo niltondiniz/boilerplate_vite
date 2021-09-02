@@ -6,6 +6,7 @@ COPY nest*.json .
 #RUN npm install -g nodemon
 RUN npm install
 COPY ./src .
+COPY ./env ./env
 CMD npm run start
 
 FROM fluent/fluent-bit:1.2 as fluentbit

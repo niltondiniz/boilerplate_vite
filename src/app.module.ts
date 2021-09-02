@@ -18,7 +18,7 @@ const ENV = process.env.NODE_ENV;
 
 @Module({
   imports: [
-    ConfigModule.forRoot({envFilePath: `./env/env.${ENV}`, isGlobal: true}), //configuracao do arquivo de configuracoes
+    ConfigModule.forRoot({envFilePath: `./env/${ENV}.env`, isGlobal: true}), //configuracao do arquivo de configuracoes
     CorridaModule, 
     TerminusModule, 
     WinstonModule.forRoot(winstonConfig),
