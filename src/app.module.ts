@@ -1,6 +1,6 @@
 import { ConfigModule } from '@nestjs/config';
 import { CorridaModule } from './api/corrida/corrida.module';
-import { CorridaController } from './api/corrida/corrida.controller';
+
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -8,11 +8,16 @@ import { WinstonModule } from 'nest-winston';
 import { winstonConfig } from './configs/winston.config';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { LoggerInterceptor } from './interceptors/logger.interceptor'; //importo meu interceptador
-import { APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_INTERCEPTOR, APP_FILTER } from '@nestjs/core';
 import { Consumercontroller } from './consumer/consumer.controller';
 import { TerminusModule } from '@nestjs/terminus';
 import { HealthController } from './health/health.controller';
-import { HttpModule } from '@nestjs/axios';
+
+
+import { KafkaConfig } from './configs/kafka.config'
+
+import { FitroDeExcecaoHttp } from './core/filtro-de-excecao-http.filter';
+import { TransformaRespostaInterceptor } from './core/http/transforma-resposta.interceptor';
 
 const ENV = process.env.NODE_ENV;
 
@@ -24,14 +29,14 @@ const ENV = process.env.NODE_ENV;
     WinstonModule.forRoot(winstonConfig),
     ClientsModule.register([
       {
-        name: 'KAFKA_SERVICE',
+        name: KafkaConfig.name,
         transport: Transport.KAFKA,
         options: {
           client: {
-            brokers: ["broker:29092"],
+            brokers: [KafkaConfig.broker],
           },
           consumer: {
-            groupId: 'my-consumer-' + Math.random(),
+            groupId: KafkaConfig.consumer.groupId,
           },
         },
       },
@@ -43,6 +48,14 @@ const ENV = process.env.NODE_ENV;
       {
         provide: APP_INTERCEPTOR, //aqui adiciono um provedor que será provido de um interceptador
         useClass: LoggerInterceptor, //que este interceptador será a nossa classe LoggerInterceptor
+      },
+      {
+        provide: APP_FILTER,
+        useClass: FitroDeExcecaoHttp
+      },
+      {
+        provide: APP_INTERCEPTOR,
+        useClass: TransformaRespostaInterceptor
       },
     ],
 })

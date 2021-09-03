@@ -6,6 +6,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 import { WinstonModule } from 'nest-winston';
 import { winstonConfig } from './configs/winston.config'
+import { KafkaConfig } from './configs/kafka.config'
 
 import { ValidationPipe } from '@nestjs/common';
 import { useContainer } from 'class-validator';
@@ -22,7 +23,6 @@ async function bootstrap() {
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
 
-  console.log('teste 12345');
   console.log(`ambiente:${process.env.NODE_ENV}`);
   console.log(process.env.API_PORT);
 
@@ -30,10 +30,10 @@ async function bootstrap() {
     transport: Transport.KAFKA,
     options: {
       client: {
-        brokers: ["broker:29092"],
+        brokers: [KafkaConfig.broker],
       },
       consumer: {
-        groupID: 'my-consumer-' + Math.random(), 
+        groupID: KafkaConfig.consumer.groupId, 
       }
     }
   });

@@ -9,18 +9,19 @@ import { Module } from "@nestjs/common";
 import { ClientsModule, Transport } from "@nestjs/microservices";
 import { CorridaController } from "./corrida.controller";
 
+import { KafkaConfig } from '../../configs/kafka.config'
 @Module({
   imports: [
     ClientsModule.register([
       {
-        name: "KAFKA_SERVICE",
+        name: KafkaConfig.name,
         transport: Transport.KAFKA,
         options: {
           client: {
-            brokers: ["broker:29092"],
+            brokers: [KafkaConfig.broker],
           },
           consumer: {
-            groupId: "my-consumer-" + Math.random(),
+            groupId: KafkaConfig.consumer.groupId,
           },
         },
       },

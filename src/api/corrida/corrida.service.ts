@@ -20,8 +20,8 @@ export class CorridaService implements OnModuleInit{
         this.kafkaProducer = await this.clienteKafka.connect();
     }
 
-    public async criaCorrida(corrida: Corrida){
-      const resultado = await this.kafkaProducer.send({
+    public  criaCorrida(corrida: Corrida) : Corrida {
+      const resultado =  this.kafkaProducer.send({
           topic: 'corridas',
           messages: [
               {
@@ -30,14 +30,16 @@ export class CorridaService implements OnModuleInit{
           ]
       });  
       
-      const resultadoPagamento = await this.kafkaProducer.send({
+      const resultadoPagamento =  this.kafkaProducer.send({
         topic: 'Pagamentos',
         messages: [
             {
                 key: Math.random() + "" , value: JSON.stringify({corrida})
             }
         ]
-    });  
+        }); 
+        
+        return corrida;
 
     }
 

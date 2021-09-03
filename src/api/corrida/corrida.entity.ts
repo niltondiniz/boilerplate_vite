@@ -5,6 +5,11 @@ import { pipe } from 'rxjs';
 export class Corrida{
 
     @ApiProperty({
+      description: 'Identificação da Corrida',
+    }) @IsString()
+    idCorrida: String;
+
+    @ApiProperty({
         description: 'Campo para identificar o Passageiro',
         minimum: 1,
         maximum: 50
